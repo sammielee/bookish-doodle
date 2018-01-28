@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="utf-8" />
+   <title>Study Space</title>
+
+   <link rel="stylesheet"type="text/css"href="styles.css">
+
+
+   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+   <script type="text/javascript">
+      $(document).ready(function () {
+         initialize();
+      });
+      var clr = 'black';
+
+      // works out the X, Y position of the click inside the canvas from the X, Y position on the page
+      function getPosition(mouseEvent, sigCanvas) {
+         var x, y;
+         if (mouseEvent.pageX != undefined && mouseEvent.pageY != undefined) {
+            x = mouseEvent.pageX;
+            y = mouseEvent.pageY;
+         } else {
+            x = mouseEvent.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+            y = mouseEvent.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+         }
+
+         return { X: x - sigCanvas.offsetLeft, Y: y - sigCanvas.offsetTop };
+      }
+
+      function initialize() {
+         // get references to the canvas element as well as the 2D drawing context
+         var sigCanvas = document.getElementById("canvasSignature");
+         var context = sigCanvas.getContext("2d");
+         context.strokeStyle = clr;
+
+         // This will be defined on a TOUCH device such as iPad or Android, etc.
+         var is_touch_device = 'ontouchstart' in document.documentElement;
+
+         if (is_touch_device) {
+            // create a drawer which tracks touch movements
+            var drawer = {
+               isDrawing: false,
+               touchstart: function (coors) {
+                  context.beginPath();
+                  context.moveTo(coors.x, coors.y);
+                  this.isDrawing = true;
+               },
+               touchmove: function (coors) {
+                  if (this.isDrawing) {
+                     context.lineTo(coors.x, coors.y);
+                     context.stroke();
+                  }
+               },
+               touchend: function (coors) {
+                  if (this.isDrawing) {
+                     this.touchmove(coors);
+                     this.isDrawing = false;
+                  }
+               }
+            };
+
+            // create a function to pass touch event
