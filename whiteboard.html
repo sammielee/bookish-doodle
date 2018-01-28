@@ -1,3 +1,4 @@
+<script src="./button.js" type="text/javascript"></script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -147,8 +148,10 @@
                      .unbind("mouseout");
       }
       function myFunction(){
-        document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
-        context.strokeStyle = 'yellow';
+        var yellowCanvasStroke = document.getElementById("canvasSignature");
+        document.getElementById("canvasSignature").innerHTML = "YOU CLICKED ME!";
+        yellowCanvasStroke.strokeStyle = '#FBFF6E';
+
 
       }
    </script>
@@ -162,7 +165,7 @@
       <!-- It's bad practice (to me) to put your CSS here.  I'd recommend the use of a CSS file! -->
       <canvas id="canvasSignature" width="1000px" height="500px" style="border:2px solid #ffffff;"></canvas>
    </div>
-<script src="buttons.js"></script>
+<!-- script src="buttons.js"></script   doesn't seemm like we need this -->
    <button class = "button6"></button>
    <button class = "button1"></button>
    <button class = "button2"></button>
@@ -170,8 +173,8 @@
    <button class = "button4"></button>
    <button class = "button5"></button>
 
-   <!-- <button onclick="myFunction()">click me</button>
-   <p id = "demo" onclick = "myFunction()">Click me</p> -->
+   <!-- <button onclick="myFunction()">click me</button> -->
+   <!-- <button id = "demo" onclick = "myFunction">Click me</p> -->
 
 </body>
 </html>
